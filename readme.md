@@ -1,0 +1,1 @@
+This a node practice project for a movie rental service
