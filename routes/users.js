@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User, validate} = require('../modules/users');
 const express = require('express');
@@ -14,6 +15,9 @@ router.post('/', async (req, res) =>{
     if (user) return res.status(400).send('user already registered');
 
     user = new User(_.pick(req.body, ['name', 'email', 'password'])); //_.pick returns object with specified properies only
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
 
     await user.save();
 
