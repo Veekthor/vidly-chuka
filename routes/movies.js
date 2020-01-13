@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth');
 const {Movie, validate} = require('../modules/movies');
 const { Genre } = require('../modules/genres');
 const express = require('express');
@@ -25,7 +26,7 @@ router.get('/:id', async (req, res) =>{
 });
 
 //POST
-router.post('/', async (req, res) =>{
+router.post('/', auth, async (req, res) =>{
     const { error } = validate(req.body);
 
     if (error) {
@@ -55,7 +56,7 @@ router.post('/', async (req, res) =>{
 
 
 //PUT
-router.put('/:id', async (req, res) =>{
+router.put('/:id', auth, async (req, res) =>{
     const { error } = validate(req.body);
 
     if (error) {

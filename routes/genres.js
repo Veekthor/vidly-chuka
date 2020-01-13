@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth');
 const {Genre, validate} = require('../modules/genres');
 const express = require('express');
 const router = express.Router();
@@ -8,7 +9,7 @@ router.get('/', async (req, res) => {
     res.send(genres);
 });
 
-router.post('/', async (req, res) =>{
+router.post('/', auth, async (req, res) =>{
 
     const { error } = validate(req.body);
 
@@ -28,7 +29,7 @@ router.post('/', async (req, res) =>{
 });
 
 //put operation
-router.put('/:id', async (req, res) =>{
+router.put('/:id', auth, async (req, res) =>{
     const { error } = validate(req.body);
     //Send bad request
     if (error){

@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth');
 const {Customer, validate} = require('../modules/customer');
 const mongoose = require('mongoose');
 const express = require('express');
@@ -21,7 +22,7 @@ router.get('/:id', async (req, res) =>{
     res.send(customer);
 })
 
-router.post('/', async (req, res) =>{
+router.post('/', auth, async (req, res) =>{
     const { error } = validate(req.body);
     if(error){
         res.status(400)
@@ -39,7 +40,7 @@ router.post('/', async (req, res) =>{
     res.send(customer);
 });
 
-router.put('/:id', async (req, res) =>{
+router.put('/:id', auth, async (req, res) =>{
     const { error } = validate(req.body);
     if(error){
         res.status(400)
