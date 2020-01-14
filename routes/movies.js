@@ -1,3 +1,4 @@
+const asyncMiddleWare = require('../middleware/async');
 const auth = require('../middleware/auth');
 const {Movie, validate} = require('../modules/movies');
 const { Genre } = require('../modules/genres');
@@ -7,16 +8,15 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 
-
 //Get
-router.get('/', async (req, res) =>{
+router.get('/', asyncMiddleWare(async (req, res) =>{
     const movies = await Movie.find()
                         .sort('title');
     res.send(movies);
-});
+}));
 
 //Get ID
-router.get('/:id', async (req, res) =>{
+router.get('/:id', asyncMiddleWare(async (req, res) =>{
     const movie = await Movie.findById(req.params.id);
     if (!movie){
         res.status(400)
@@ -24,10 +24,10 @@ router.get('/:id', async (req, res) =>{
         return;
     }
     res.send(movie);
-});
+}));
 
 //POST
-router.post('/', auth, async (req, res) =>{
+router.post('/', auth, asyncMiddleWare(async (req, res) =>{
     const { error } = validate(req.body);
 
     if (error) {
@@ -52,12 +52,12 @@ router.post('/', auth, async (req, res) =>{
     await movie.save();
 
     res.send(movie);
-});
+}));
 
 
 
 //PUT
-router.put('/:id', auth, async (req, res) =>{
+router.put('/:id', auth, asyncMiddleWare(async (req, res) =>{
     const { error } = validate(req.body);
 
     if (error) {
@@ -84,12 +84,12 @@ router.put('/:id', auth, async (req, res) =>{
         return;
     }
     res.send(movie);
-});
+}));
 
 
 
 //Delete
-router.delete('/:id', [auth, admin], async (req, res) =>{
+router.delete('/:id', [auth, admin], asyncMiddleWare(async (req, res) =>{
     const movie = await Movie.findByIdAndRemove(req.params.id);
     if (!movie){
         res.status(400)
@@ -97,6 +97,6 @@ router.delete('/:id', [auth, admin], async (req, res) =>{
         return;
     }
     res.send(movie); 
-});
+}));
 
 module.exports = router;
