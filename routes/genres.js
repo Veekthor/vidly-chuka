@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     const genres = await Genre.find().sort('name');
     res.send(genres);
 });

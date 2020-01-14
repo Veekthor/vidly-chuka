@@ -8,6 +8,7 @@ const movies = require('./routes/movies');
 const rentals = require('./routes/rentals');
 const auth = require('./routes/auth');
 const users = require('./routes/users');
+const error = require('./middleware/error');
 const express = require('express');
 const app = express();
 
@@ -30,6 +31,9 @@ app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/auth', auth);
 app.use('/api/users', users);
+
+//error middle ware
+app.use(error);
 
 app.get('/', (req, res) => {
     res.send("Hello world");
