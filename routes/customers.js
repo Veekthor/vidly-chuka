@@ -3,6 +3,7 @@ const {Customer, validate} = require('../modules/customer');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const admin = require('../middleware/admin');
 
 
 router.get('/', async (req, res)=>{
@@ -62,7 +63,7 @@ router.put('/:id', auth, async (req, res) =>{
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     try{
         const customer = await Customer.findByIdAndRemove(req.params.id);
         res.send(customer)

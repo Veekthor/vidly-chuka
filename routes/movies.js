@@ -1,6 +1,7 @@
 const auth = require('../middleware/auth');
 const {Movie, validate} = require('../modules/movies');
 const { Genre } = require('../modules/genres');
+const admin = require('../middleware/admin');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -88,7 +89,7 @@ router.put('/:id', auth, async (req, res) =>{
 
 
 //Delete
-router.delete('/:id', async (req, res) =>{
+router.delete('/:id', [auth, admin], async (req, res) =>{
     const movie = await Movie.findByIdAndRemove(req.params.id);
     if (!movie){
         res.status(400)
