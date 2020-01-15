@@ -4,6 +4,7 @@ require('express-async-errors');
 
 module.exports = function(){//Handle Uncaught exception
     winston.handleExceptions(
+        new winston.transports.Console({ colorize: true, prettyPrint: true}),
         new winston.transports.File({filename: 'uncaughtExceptions.log'})
     );
     //Handle Unhandled Promise Rejection
