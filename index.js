@@ -15,6 +15,18 @@ const error = require('./middleware/error');
 const express = require('express');
 const app = express();
 
+//Handle Uncaught exception
+winston.handleExceptions(
+    new winston.transports.File({filename: 'uncaughtExceptions.log'}),
+    new winston.transports.MongoDB({ 
+        db: 'mongodb://localhost/vidly',
+        level: 'error'
+    })
+);
+//Handle Unhandled Promise Rejection
+process.on('unhandledRejection', (ex) =>{
+    throw ex;
+});
 
 //configure winston to log to file
 winston.add(winston.transports.File, {filename: 'logfile.log'});
