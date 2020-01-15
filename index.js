@@ -5,16 +5,10 @@ const config = require('config');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
-const genres = require('./routes/genres');
-const customers = require('./routes/customers');
-const movies = require('./routes/movies');
-const rentals = require('./routes/rentals');
-const auth = require('./routes/auth');
-const users = require('./routes/users');
-const error = require('./middleware/error');
 const express = require('express');
 const app = express();
 
+require('./startup/routes')(app); // handles routes (and) middleware
 //Handle Uncaught exception
 winston.handleExceptions(
     new winston.transports.File({filename: 'uncaughtExceptions.log'}),
@@ -45,19 +39,6 @@ if(!config.get('jwtPrivateKey')){
 mongoose.connect('mongodb://localhost/vidly')
             .then(()=> console.log('Connected to MongoDB ....'))
                 .catch((err) => console.log('Error', err));
-
-
-//middle ware
-app.use(express.json());
-app.use('/api/genres', genres);
-app.use('/api/customers', customers);
-app.use('/api/movies', movies);
-app.use('/api/rentals', rentals);
-app.use('/api/auth', auth);
-app.use('/api/users', users);
-
-//error middle ware
-app.use(error);
 
 app.get('/', (req, res) => {
     res.send("Hello world");
