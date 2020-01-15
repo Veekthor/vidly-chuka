@@ -1,4 +1,5 @@
 require('express-async-errors');
+const winston = require('winston');
 const config = require('config');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
@@ -12,6 +13,10 @@ const users = require('./routes/users');
 const error = require('./middleware/error');
 const express = require('express');
 const app = express();
+
+
+//configure winston to log to file
+winston.add(winston.transports.File, {filename: 'logfile.log'});
 
 if(!config.get('jwtPrivateKey')){
     console.log('FATAL ERROR: Jwt private key not set');
