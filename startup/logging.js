@@ -1,5 +1,5 @@
 const winston = require('winston');
-require('winston-mongodb');
+// require('winston-mongodb');
 require('express-async-errors');
 
 module.exports = function(){//Handle Uncaught exception
@@ -15,8 +15,8 @@ module.exports = function(){//Handle Uncaught exception
     //configure winston to log to file
     winston.add(winston.transports.File, {filename: 'logfile.log'});
     //configure winston to log to MongoDB
-    winston.add(winston.transports.MongoDB, { 
-        db: 'mongodb://localhost/vidly',
-        level: 'error'
-    });
+    // winston.add(winston.transports.MongoDB, { 
+    //     db: 'mongodb://localhost/vidly',
+    //     level: 'error'
+    // });
 }
