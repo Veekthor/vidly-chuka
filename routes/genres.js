@@ -1,6 +1,6 @@
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
-const {Genre, validate} = require('../modules/genres');
+const {Genre, validate} = require('../models/genres');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
