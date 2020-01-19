@@ -1,3 +1,4 @@
+const validateobjectId = require('../middleware/validateobjectId');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const {Genre, validate} = require('../models/genres');
@@ -30,12 +31,7 @@ router.post('/', auth, async (req, res) =>{
 });
 
 //put operation
-router.put('/:id', auth, async (req, res) =>{
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id))
-        return res.status(404).send('invalid ID');
-        
-   
+router.put('/:id', [auth, validateobjectId], async (req, res) =>{
     const { error } = validate(req.body);
     //Send bad request
     if (error){
@@ -60,10 +56,7 @@ router.put('/:id', auth, async (req, res) =>{
 });
 
 //delete operation
-router.delete('/:id', [auth, admin], async (req, res) =>{
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id))
-        return res.status(404).send('invalid ID');
+router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{
 
    const genre = await Genre.findByIdAndRemove(req.params.id);
 
@@ -75,11 +68,7 @@ router.delete('/:id', [auth, admin], async (req, res) =>{
     res.send(genre);
 });
 
-router.get('/:id',async (req, res) =>{
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id))
-        return res.status(404).send('invalid ID');
-
+router.get('/:id', validateobjectId, async (req, res) =>{
     const genre = await Genre.findById(req.params.id);
     if (!genre) return res.status(404).send('Genre does not exist');
     

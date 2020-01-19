@@ -1,3 +1,4 @@
+const validateobjectId = require('../middleware/validateobjectId');
 const auth = require('../middleware/auth');
 const {Customer, validate} = require('../models/customer');
 const mongoose = require('mongoose');
@@ -11,7 +12,7 @@ router.get('/', async (req, res)=>{
     res.send(customer);
 });
 
-router.get('/:id', async (req, res) =>{
+router.get('/:id', validateobjectId, async (req, res) =>{
 
     if (!mongoose.Types.ObjectId.isValid(req.params.id))
         return res.status(404).send('invalid ID');
@@ -44,7 +45,7 @@ router.post('/', auth, async (req, res) =>{
     res.send(customer);
 });
 
-router.put('/:id', auth, async (req, res) =>{
+router.put('/:id', [auth, validateobjectId], async (req, res) =>{
 
     if (!mongoose.Types.ObjectId.isValid(req.params.id))
         return res.status(404).send('invalid ID');
@@ -70,7 +71,7 @@ router.put('/:id', auth, async (req, res) =>{
     }
 });
 
-router.delete('/:id', [auth, admin], async (req, res) => {
+router.delete('/:id', [auth, admin, validateobjectId], async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(req.params.id))
         return res.status(404).send('invalid ID');

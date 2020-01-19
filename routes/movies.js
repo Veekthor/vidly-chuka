@@ -1,3 +1,4 @@
+const validateobjectId = require('../middleware/validateobjectId');
 const auth = require('../middleware/auth');
 const {Movie, validate} = require('../models/movies');
 const { Genre } = require('../models/genres');
@@ -15,11 +16,7 @@ router.get('/', async (req, res) =>{
 });
 
 //Get ID
-router.get('/:id', async (req, res) =>{
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id))
-        return res.status(404).send('invalid ID');
-        
+router.get('/:id', validateobjectId, async (req, res) =>{        
     const movie = await Movie.findById(req.params.id);
     if (!movie){
         res.status(400)
@@ -60,10 +57,7 @@ router.post('/', auth, async (req, res) =>{
 
 
 //PUT
-router.put('/:id', auth, async (req, res) =>{
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id))
-        return res.status(404).send('invalid ID');
+router.put('/:id', [auth, validateobjectId], async (req, res) =>{
         
     const { error } = validate(req.body);
 
@@ -96,11 +90,7 @@ router.put('/:id', auth, async (req, res) =>{
 
 
 //Delete
-router.delete('/:id', [auth, admin], async (req, res) =>{
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id))
-        return res.status(404).send('invalid ID');
-        
+router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{ 
     const movie = await Movie.findByIdAndRemove(req.params.id);
     if (!movie){
         res.status(400)
