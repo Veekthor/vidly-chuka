@@ -31,6 +31,11 @@ router.post('/', auth, async (req, res) =>{
 
 //put operation
 router.put('/:id', auth, async (req, res) =>{
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+        return res.status(404).send('invalid ID');
+        
+   
     const { error } = validate(req.body);
     //Send bad request
     if (error){
@@ -56,6 +61,10 @@ router.put('/:id', auth, async (req, res) =>{
 
 //delete operation
 router.delete('/:id', [auth, admin], async (req, res) =>{
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+        return res.status(404).send('invalid ID');
+
    const genre = await Genre.findByIdAndRemove(req.params.id);
 
     if (!genre){
@@ -67,11 +76,14 @@ router.delete('/:id', [auth, admin], async (req, res) =>{
 });
 
 router.get('/:id',async (req, res) =>{
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+        return res.status(404).send('invalid ID');
+
     const genre = await Genre.findById(req.params.id);
-    if (!genre){
-        res.status(404)
-            .send('Genre does not exist');
-    } else {res.send(genre)}
+    if (!genre) return res.status(404).send('Genre does not exist');
+    
+    res.send(genre)
 });
 
 module.exports = router;

@@ -13,6 +13,9 @@ router.get('/', async (req, res)=>{
 
 router.get('/:id', async (req, res) =>{
 
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+        return res.status(404).send('invalid ID');
+
     const customer = await Customer.findById(req.params.id);
 
     if(!customer) {
@@ -42,6 +45,10 @@ router.post('/', auth, async (req, res) =>{
 });
 
 router.put('/:id', auth, async (req, res) =>{
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+        return res.status(404).send('invalid ID');
+        
     const { error } = validate(req.body);
     if(error){
         res.status(400)
@@ -64,6 +71,10 @@ router.put('/:id', auth, async (req, res) =>{
 });
 
 router.delete('/:id', [auth, admin], async (req, res) => {
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+        return res.status(404).send('invalid ID');
+        
     try{
         const customer = await Customer.findByIdAndRemove(req.params.id);
         res.send(customer)
