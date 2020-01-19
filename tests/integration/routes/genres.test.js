@@ -1,10 +1,10 @@
 const request = require('supertest');
-const { Genre } = require('../../models/genres');
-const { User } = require('../../models/users');
+const { Genre } = require('../../../models/genres');
+const { User } = require('../../../models/users');
 
 let server;
 describe('/api/genres', () => {
-    beforeEach(() => {server = require('../../index')});
+    beforeEach(() => {server = require('../../../index')});
     afterEach( async () => { 
         server.close()
         await Genre.remove({}); // cleans up DB after test
