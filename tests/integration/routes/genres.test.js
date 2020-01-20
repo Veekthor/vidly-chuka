@@ -25,6 +25,7 @@ describe('/api/genres', () => {
             expect(res.body.some(g => g.name === 'genre3')).toBeTruthy();
         });
     });
+
     describe('GET /:id', () =>{
         it('should return a 404 error if invalid ID is provided', async () => {
             const res = await request(server).get('/api/genres/1');
@@ -106,6 +107,84 @@ describe('/api/genres', () => {
             
             expect(res.status).toBe(200);
             expect(res.body).toMatchObject({ name: 'genre1'});
+            expect(res.body).toHaveProperty('_id');
+        });
+    });
+
+    describe('PUT /:id', () => {
+        let token,
+        id,
+        name;
+
+        beforeEach( async () => {
+            const genre = new Genre({ name: 'genre1'});
+            await genre.save();
+
+            id = genre._id;
+            token = new User().generateAuthToken();
+            name = 'genre2'
+        });
+        //Happy path
+
+        const exec = () => {
+            return request(server)
+                    .put('/api/genres/' + id)
+                    .set('x-auth-token', token)
+                    .send({ name });
+        };
+
+        it('should return 401 if user is not logged in', async () =>{
+            token = '';
+            
+            const res = await exec();
+
+            expect(res.status).toBe(401);
+        });
+
+        it('should return 404 if invalid ID', async () =>{
+            id = 'q';
+
+            const res = await exec();
+
+            expect(res.status).toBe(404);
+        });
+
+        it('should return 400 if user is logged in and input(name) is less than 5 characters', async() => {
+            name = '1234'; //name less than 5 char
+
+            const res = await exec();
+
+            expect(res.status).toBe(400);
+        });
+
+        it('should return 400 if user is logged in and input(name) is more than 50 characters', async() => {
+            name = new Array(52).join('a');
+
+            const res = await exec();
+
+            expect(res.status).toBe(400);
+        });
+
+        it('should return 404 if user is logged in and genre is not found', async() => {
+            id = mongoose.Types.ObjectId();
+
+            const res = await exec();
+
+            expect(res.status).toBe(404);
+        });
+
+        it('should Update genre', async() => {
+            await exec();
+
+            const genre = await Genre.find({ name: 'genre2'});
+
+            expect(genre[0]).toMatchObject({name: 'genre2', _id: id});
+        });
+
+        it('should send updated genre to client', async() => {
+            const res = await exec();
+
+            expect(res.body).toMatchObject({name: 'genre2'});
             expect(res.body).toHaveProperty('_id');
         });
     });
