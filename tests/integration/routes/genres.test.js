@@ -188,4 +188,71 @@ describe('/api/genres', () => {
             expect(res.body).toHaveProperty('_id');
         });
     });
+
+    describe('DELETE /:id', () =>{
+        let token,
+        id;
+
+        beforeEach( async () => {
+            const genre = new Genre({ name: 'genre1'});
+            await genre.save();
+
+            id = genre._id;
+            token = new User({isAdmin: true}).generateAuthToken();
+        });
+        //Happy path
+
+        const exec = () => {
+            return request(server)
+                    .delete('/api/genres/' + id)
+                    .set('x-auth-token', token)
+        };
+
+        it('should return 401 is user is not logged in', async () =>{
+            token = '';
+
+            const res = await exec();
+
+            expect(res.status).toBe(401);
+        });
+
+        it('should return 403 is user is not an admin', async () =>{
+            token = new User({isAdmin: false}).generateAuthToken();
+
+            const res = await exec();
+
+            expect(res.status).toBe(403);
+        });
+
+        it('should return 404 if ID is not valid', async () =>{
+            id = 'a';
+
+            const res = await exec();
+
+            expect(res.status).toBe(404);
+        });
+
+        it('should return 404 if genre does not exist', async () =>{
+            id = mongoose.Types.ObjectId();
+
+            const res = await exec();
+
+            expect(res.status).toBe(404);
+        });
+
+        it('should delete genre if it exists', async () =>{
+            const res = await exec();
+
+            const genre = Genre.find({ name: 'genre1'});
+            
+            expect(genre[0]).toBeUndefined();
+        });
+
+        it('should send deleted genre if it exists to client', async () =>{
+            const res = await exec();
+            
+            expect(res.body).toHaveProperty('_id');
+            expect(res.body).toHaveProperty('name');
+        });
+    });
 });
