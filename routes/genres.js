@@ -34,11 +34,7 @@ router.post('/', auth, async (req, res) =>{
 router.put('/:id', [auth, validateobjectId], async (req, res) =>{
     const { error } = validate(req.body);
     //Send bad request
-    if (error){
-        res.status(400)
-            .send(error.details[0].message);
-        return;
-    }
+    if (error) return res.status(400).send(error.details[0].message);
 
     const genre = await Genre.findByIdAndUpdate(req.params.id,{
        $set: {
@@ -46,11 +42,7 @@ router.put('/:id', [auth, validateobjectId], async (req, res) =>{
        }
     }, {new: true});
     
-    if (!genre){
-        res.status(404)
-            .send('Genre does not exist');
-        return;
-    }
+    if (!genre) return res.status(404).send('Genre does not exist');
     
     res.send(genre);
 });
