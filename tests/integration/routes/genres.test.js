@@ -1,6 +1,7 @@
 const request = require('supertest');
 const { Genre } = require('../../../models/genres');
 const { User } = require('../../../models/users');
+const mongoose = require('mongoose');
 
 let server;
 describe('/api/genres', () => {
@@ -9,6 +10,7 @@ describe('/api/genres', () => {
         server.close()
         await Genre.remove({}); // cleans up DB after test
     });
+
     describe('GET /', () => {
         it('should return all genres', async () =>{
 
@@ -27,7 +29,13 @@ describe('/api/genres', () => {
         it('should return a 404 error if invalid ID is provided', async () => {
             const res = await request(server).get('/api/genres/1');
             expect(res.status).toBe(404);
-            // expect(res.body).toBe('Genre does not exist');
+        });
+
+        it('should return a 404 error if genre is not found', async () => {
+            const id = mongoose.Types.ObjectId().toHexString();
+
+            const res = await request(server).get('/api/genres/' + id);
+            expect(res.status).toBe(404);
         });
 
         it('should return genre if valid ID is provided', async () => {
@@ -39,6 +47,7 @@ describe('/api/genres', () => {
             expect(res.body).toHaveProperty('name', 'genre1');
         });
     });
+
     describe('POST /', () => {
         //Initialize needed variables
         let token;
