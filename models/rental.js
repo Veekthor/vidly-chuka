@@ -30,7 +30,7 @@ const Rental = mongoose.model('Rental', new mongoose.Schema({
                 trim: true,
                 required: true,
                 minlength: 5,
-                maclength: 255
+                maxlength: 255
             },
             dailyRentalRate: {
                 type: Number,
