@@ -7,7 +7,7 @@ let server;
 describe('/api/genres', () => {
     beforeEach(() => {server = require('../../../index')});
     afterEach( async () => { 
-        await server.close()
+        await server.close();
         await Genre.remove({}); // cleans up DB after test
     });
 

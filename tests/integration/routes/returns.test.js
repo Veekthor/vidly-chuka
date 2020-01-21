@@ -2,18 +2,28 @@ const request = require('supertest');
 const { Rental } = require('../../../models/rental');
 const { User } = require('../../../models/users');
 const mongoose = require('mongoose');
-require('jest');
 
 describe('/api/returns', () => {
     let server,
     customerId,
     movieId,
-    rental;
+    rental,
+    token;
+
+    //Happy path
+    const exec = () =>{
+        return request(server)
+                            .post('/api/returns')
+                            .set('x-auth-token', token)
+                            .send({ customerId, movieId });
+    }
     beforeEach( async () => {
         server = require('../../../index');
         
+        token = new User().generateAuthToken();
         customerId = mongoose.Types.ObjectId();
         movieId = mongoose.Types.ObjectId(); 
+
         rental = new Rental({
             customer: {
                 _id: customerId,
@@ -29,32 +39,34 @@ describe('/api/returns', () => {
         await rental.save();
     });
     afterEach( async () => { 
-       await server.close()
+       await server.close();
         await Rental.remove({}); // cleans up DB after test
     });
 
     it('should return 401 if user is not logged in', async () => {
-        const res = await request(server)
-                            .post('/api/returns')
-                            .send({customerId, movieId});
+        token = '';
+        const res = await exec();
         expect(res.status).toBe(401);
     });
 
     it('should return 400 if user is logged in and customerId is not provided', async () => {
-        const token = new User().generateAuthToken();
-        const res = await request(server)
-                            .post('/api/returns')
-                            .set('x-auth-token', token)
-                            .send({ movieId });
+        customerId = '';
+        const res = await exec();
+
         expect(res.status).toBe(400);
     });
 
     it('should return 400 if user is logged in and movieId is not provided', async () => {
-        const token = new User().generateAuthToken();
-        const res = await request(server)
-                            .post('/api/returns')
-                            .set('x-auth-token', token)
-                            .send({ customerId });
+        movieId = '';
+        const res = await exec();
         expect(res.status).toBe(400);
     });
+
+    // it('should return 404 if no rental found with customerId/movieId', async () => {
+    //     customerId = mongoose.Types.ObjectId();
+    //     movieId = mongoose.Types.ObjectId(); 
+
+    //     const res = await exec();
+    //     expect(res.status).toBe(404);
+    // });
 });
