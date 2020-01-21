@@ -5,7 +5,7 @@ const { User } = require('../../../models/users');
 describe('Authorization middleware', () => {
     beforeEach(() => {server = require('../../../index')});
     afterEach( async () => { 
-        server.close()
+        await server.close()
         await Genre.remove({}); // cleans up DB after test
     });
 
