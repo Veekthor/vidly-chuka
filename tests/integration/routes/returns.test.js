@@ -51,6 +51,7 @@ describe('/api/returns', () => {
 
     it('should return 400 if user is logged in and customerId is not provided', async () => {
         customerId = '';
+
         const res = await exec();
 
         expect(res.status).toBe(400);
@@ -58,15 +59,15 @@ describe('/api/returns', () => {
 
     it('should return 400 if user is logged in and movieId is not provided', async () => {
         movieId = '';
+
         const res = await exec();
+
         expect(res.status).toBe(400);
     });
 
-    // it('should return 404 if no rental found with customerId/movieId', async () => {
-    //     customerId = mongoose.Types.ObjectId();
-    //     movieId = mongoose.Types.ObjectId(); 
-
-    //     const res = await exec();
-    //     expect(res.status).toBe(404);
-    // });
+    it('should return 404 if no rental found with customerId/movieId', async () => {
+        await Rental.remove({});
+        const res = await exec();
+        expect(res.status).toBe(404);
+    });
 });
