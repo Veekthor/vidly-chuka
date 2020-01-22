@@ -1,6 +1,7 @@
 const validateobjectId = require('../middleware/validateobjectId');
 const auth = require('../middleware/auth');
-const {Customer, validate} = require('../models/customer');
+const {Customer, validate: validateCustomer} = require('../models/customer');
+const validate = require('../middleware/validateInput');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
@@ -13,10 +14,6 @@ router.get('/', async (req, res)=>{
 });
 
 router.get('/:id', validateobjectId, async (req, res) =>{
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id))
-        return res.status(404).send('invalid ID');
-
     const customer = await Customer.findById(req.params.id);
 
     if(!customer) {
@@ -27,15 +24,8 @@ router.get('/:id', validateobjectId, async (req, res) =>{
     res.send(customer);
 });
 
-router.post('/', auth, async (req, res) =>{
-    const { error } = validate(req.body);
-    if(error){
-        res.status(400)
-            .send(error.details[0].message);
-    return;
-    }
-
-    const customer = new Customer({
+router.post('/', [auth, validate(validateCustomer)], async (req, res) =>{
+        const customer = new Customer({
         name: req.body.name,
         phone: req.body.phone,
         isGold: req.body.isGold
@@ -45,17 +35,7 @@ router.post('/', auth, async (req, res) =>{
     res.send(customer);
 });
 
-router.put('/:id', [auth, validateobjectId], async (req, res) =>{
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id))
-        return res.status(404).send('invalid ID');
-        
-    const { error } = validate(req.body);
-    if(error){
-        res.status(400)
-            .send(error.details[0].message);
-        return;
-    }
+router.put('/:id', [auth, validateobjectId, validate(validateCustomer)], async (req, res) =>{   
     try {
         const customer = await Customer.findByIdAndUpdate(req.params.id,{
             name: req.body.name,
@@ -72,10 +52,6 @@ router.put('/:id', [auth, validateobjectId], async (req, res) =>{
 });
 
 router.delete('/:id', [auth, admin, validateobjectId], async (req, res) => {
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id))
-        return res.status(404).send('invalid ID');
-        
     try{
         const customer = await Customer.findByIdAndRemove(req.params.id);
         res.send(customer)
