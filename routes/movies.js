@@ -1,12 +1,11 @@
 const validateobjectId = require('../middleware/validateobjectId');
 const auth = require('../middleware/auth');
-const {Movie, validate} = require('../models/movies');
+const {Movie, validate: validateMovie} = require('../models/movies');
 const { Genre } = require('../models/genres');
 const admin = require('../middleware/admin');
+const validate = require('../middleware/validateInput');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-
 
 //Get
 router.get('/', async (req, res) =>{
@@ -27,15 +26,7 @@ router.get('/:id', validateobjectId, async (req, res) =>{
 });
 
 //POST
-router.post('/', auth, async (req, res) =>{
-    const { error } = validate(req.body);
-
-    if (error) {
-        res.status(400)
-            .send(error.details[0].message);
-        return;
-    }
-
+router.post('/', [auth, validate(validateMovie)], async (req, res) =>{
     const genre = await Genre.findById(req.body.genreId);
     if (!genre) return res.status(400).send('Invalid genre');
 
@@ -57,15 +48,7 @@ router.post('/', auth, async (req, res) =>{
 
 
 //PUT
-router.put('/:id', [auth, validateobjectId], async (req, res) =>{
-        
-    const { error } = validate(req.body);
-
-    if (error) {
-        res.status(400)
-            .send(error.details[0].message);
-        return;
-    }
+router.put('/:id', [auth, validateobjectId, validate(validateMovie)], async (req, res) =>{
     const genre = await Genre.findById(req.body.genreId);
     if (!genre) return res.status(400).send('Invalid genre');
 
