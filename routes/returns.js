@@ -1,5 +1,4 @@
 const Joi = require('joi')
-const moment = require('moment');
 const auth = require('../middleware/auth');
 const validate = require('../middleware/validateInput');
 const {Rental} = require('../models/rental');
@@ -16,17 +15,16 @@ router.post('/', [auth, validate(validateReturn)], async (req, res, next) => {
     
     if(rental.dateReturned) return res.status(400).send('rental already processed');
 
-    rental.dateReturned = new Date();
-    const diffDays = moment().diff(rental.dateOut, 'days'); //calculate the days difference
-    rental.rentalFee = diffDays * rental.movie.dailyRentalRate;
+    rental.return();
     await rental.save();
+
     await Movie.update({_id: req.body.movieId},{
         $inc: {numberInStock: 1}
     });
 
 
     
-    res.status(200).send(rental);
+    res.send(rental);
 });
 
 function validateReturn(req){
