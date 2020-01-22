@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-//Add method to user schema
+//Add (instance) method to user schema
 userSchema.methods.generateAuthToken = function(){
                                 //Payload          //PrivateKey
     const token = jwt.sign({_id: this._id, isAdmin: this.isAdmin}, config.get('jwtPrivateKey')); //to create JSON webtoken 
