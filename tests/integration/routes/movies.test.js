@@ -13,7 +13,7 @@ describe('/api/movies', () => {
     describe('POST /', () => {
         it('should return 400 if genreId is invalid', async () => {
             const token = new User().generateAuthToken();
-            const res = await request(server).post('/api/customers')
+            const res = await request(server).post('/api/movies')
             .set('x-auth-token', token)
             .send({
                 title: '12345',
