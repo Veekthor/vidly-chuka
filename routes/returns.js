@@ -1,17 +1,16 @@
 const Joi = require('joi')
 const moment = require('moment');
 const auth = require('../middleware/auth');
+const validate = require('../middleware/validateInput');
 const {Rental} = require('../models/rental');
 const { Movie } = require('../models/movies');
 const express = require('express');
 const router = express.Router();
 
 
-router.post('/', auth, async (req, res, next) => {
-     //Validate input and throw error
-     const { error } = validateReturn(req.body);
-     if(error) return res.status(400).send(error.details[0].message);
 
+router.post('/', [auth, validate(validateReturn)], async (req, res, next) => {
+     
     const rental = await Rental.findOne({
         'customer._id': req.body.customerId, 
         'movie._id': req.body.movieId 
