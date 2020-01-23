@@ -7,6 +7,7 @@ require('./startup/routes')(app); // handles routes (and) middleware
 require('./startup/db')(); // connects to mongoDB
 require('./startup/config')();
 require('./startup/validation')();
+require('./startup/prod')(app);
 
 app.get('/', (req, res) => {
     res.send("Hello world");
