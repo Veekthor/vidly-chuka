@@ -37,6 +37,30 @@ router.get('/', async (req, res)=>{
     res.send(customer);
 });
 
+/**
+ * @swagger
+ * path:
+ *  /api/customers/{id}:
+ *    get:
+ *      summary: Get all customers
+ *      tags: [Customers]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Id of customer
+ *      responses:
+ *        "200":
+ *          description: An array of customers
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Customer'
+ */
 router.get('/:id', validateobjectId, async (req, res) =>{
     const customer = await Customer.findById(req.params.id);
 

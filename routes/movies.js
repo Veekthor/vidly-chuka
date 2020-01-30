@@ -38,6 +38,30 @@ router.get('/', async (req, res) =>{
     res.send(movies);
 });
 
+/**
+ * @swagger
+ * path:
+ *  /api/movies/{id}:
+ *    get:
+ *      summary: Get all movies
+ *      tags: [Movies]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Movie ID
+ *      responses:
+ *        "200":
+ *          description: An array of movies
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Movie'
+ */
 //Get ID
 router.get('/:id', validateobjectId, async (req, res) =>{        
     const movie = await Movie.findById(req.params.id);

@@ -71,6 +71,30 @@ router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{
     res.send(genre);
 });
 
+/**
+ * @swagger
+ * path:
+ *  /api/genres/{id}:
+ *    get:
+ *      summary: Get all genres
+ *      tags: [Genres]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Genre ID
+ *      responses:
+ *        "200":
+ *          description: An array of genres
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Genre'
+ */
 router.get('/:id', validateobjectId, async (req, res) =>{
     const genre = await Genre.findById(req.params.id);
     if (!genre) return res.status(404).send('Genre does not exist');
