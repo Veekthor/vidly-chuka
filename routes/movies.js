@@ -7,6 +7,28 @@ const validate = require('../middleware/validateInput');
 const express = require('express');
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Movies
+ *   description: Movies management
+ */
+
+/**
+ * @swagger
+ * path:
+ *  /api/movies:
+ *    get:
+ *      summary: Get all movies
+ *      tags: [Movies]
+ *      responses:
+ *        "200":
+ *          description: An array of users
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Movie'
+ */
 //Get
 router.get('/', async (req, res) =>{
     const movies = await Movie.find()

@@ -7,6 +7,28 @@ const express = require('express');
 const router = express.Router();
 const admin = require('../middleware/admin');
 
+/**
+ * @swagger
+ * tags:
+ *   name: Customers
+ *   description: Customers management
+ */
+
+/**
+ * @swagger
+ * path:
+ *  /api/customers:
+ *    get:
+ *      summary: Get all customers
+ *      tags: [Customers]
+ *      responses:
+ *        "200":
+ *          description: An array of users
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Customer'
+ */
 
 router.get('/', async (req, res)=>{
     const customer = await Customer.find().sort('name');

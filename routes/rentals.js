@@ -8,6 +8,28 @@ const Fawn = require('fawn');
 const express = require('express');
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Rentals
+ *   description: Rentals management
+ */
+
+/**
+ * @swagger
+ * path:
+ *  /api/rentals:
+ *    get:
+ *      summary: Get all rentals
+ *      tags: [Rentals]
+ *      responses:
+ *        "200":
+ *          description: An array of users
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Rental'
+ */
 
 Fawn.init(mongoose)
 

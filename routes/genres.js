@@ -6,6 +6,28 @@ const validate = require('../middleware/validateInput');
 const express = require('express');
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Genres
+ *   description: Genres management
+ */
+
+/**
+ * @swagger
+ * path:
+ *  /api/genres:
+ *    get:
+ *      summary: Get all genres
+ *      tags: [Genres]
+ *      responses:
+ *        "200":
+ *          description: An array of users
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Genre'
+ */
 router.get('/', async (req, res, next) => {
     const genres = await Genre.find().sort('name');
     res.send(genres);
