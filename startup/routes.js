@@ -5,6 +5,7 @@ const rentals = require('../routes/rentals');
 const auth = require('../routes/auth');
 const users = require('../routes/users');
 const returns = require('../routes/returns');
+const swagger = require('./swagger');
 const error = require('../middleware/error');
 const express = require('express');
 
@@ -18,6 +19,7 @@ module.exports = function(app){
     app.use('/api/auth', auth);
     app.use('/api/users', users);
     app.use('/api/returns', returns);
+    app.use('/docs', swagger);
 
     //error middle ware
     app.use(error);
