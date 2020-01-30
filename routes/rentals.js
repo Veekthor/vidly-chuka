@@ -28,7 +28,9 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Rental'
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Rental'
  */
 
 Fawn.init(mongoose)

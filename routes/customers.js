@@ -23,11 +23,13 @@ const admin = require('../middleware/admin');
  *      tags: [Customers]
  *      responses:
  *        "200":
- *          description: An array of users
+ *          description: An array of customers
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Customer'
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Customer'
  */
 
 router.get('/', async (req, res)=>{

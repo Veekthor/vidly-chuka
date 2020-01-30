@@ -26,7 +26,9 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Genre'
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Genre'
  */
 router.get('/', async (req, res, next) => {
     const genres = await Genre.find().sort('name');

@@ -27,7 +27,9 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Movie'
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Movie'
  */
 //Get
 router.get('/', async (req, res) =>{
