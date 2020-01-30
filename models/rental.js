@@ -34,10 +34,12 @@ const mongoose = require('mongoose');
  *              title: Avenger
  *              dailyRentalRate: 2
  *          dateOut:
- *            type: date
+ *            type: string
+ *            format: date-time
  *            description: Date rental is made, set by server.
  *          dateReturned:
- *            type: date
+ *            type: string
+ *            format: date-time
  *            description: Date rental is returned, set by server.
  *          rentalFee:
  *            type: number

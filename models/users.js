@@ -27,6 +27,7 @@ const Joi = require('joi');
  *            description: User's email.
  *          password:
  *            type: string
+ *            format: password
  *            minlength: 5
  *            maxlength: 255
  *          isAdmin:
