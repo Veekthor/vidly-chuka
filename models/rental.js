@@ -2,6 +2,58 @@ const Joi = require('joi');
 const moment = require('moment');
 const mongoose = require('mongoose');
 
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      Rental:
+ *        type: object
+ *        required:
+ *          - customer
+ *          - movie
+ *        properties:
+ *          customer:
+ *            $ref: '#components/schemas/Customer'
+ *          movie:
+ *            type: object
+ *            required:
+ *              - title
+ *              - dailyRentalRate
+ *            properties:
+ *              title:
+ *                type: string
+ *                minlength: 3
+ *                maxlength: 255
+ *                description: Movie title.
+ *              dailyRentalRate:
+ *                type: number
+ *                min: 0
+ *                maxlength: 255
+ *                description: Rental rate of movie in Naira.
+ *            example:
+ *              title: Avenger
+ *              dailyRentalRate: 2
+ *          dateOut:
+ *            type: date
+ *            description: Date rental is made, set by server.
+ *          dateReturned:
+ *            type: date
+ *            description: Date rental is returned, set by server.
+ *          rentalFee:
+ *            type: number
+ *            min: 0
+ *            description: Rental fee(In Naira), set by server.
+ *        example:
+ *          customer: {name: John Doe,
+ *                      isGold: true,
+ *                      phone: +12345678}
+ *          movie: {title: Avengers,
+ *                  dailyRentalRate: 2}
+ *          dateOut: Wed Jan 15 2020 22:40:19 GMT+0100 (West Africa Standard Time)
+ *          dateReturned: Wed Jan 15 2020 22:40:19 GMT+0100 (West Africa Standard Time)
+ *          rentalFee: 200
+ */
+
 const rentalSchema = new mongoose.Schema({
     customer: {
         type: new mongoose.Schema({
@@ -52,7 +104,7 @@ const rentalSchema = new mongoose.Schema({
         min: 0
     }
 });
-//Add (static) method to user schema
+//Add (static) method to user schema to find rental with customer and movie combination
 rentalSchema.statics.lookup = function(customerId, movieId){
     return this.findOne({
         'customer._id': customerId, 

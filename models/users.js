@@ -2,6 +2,42 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const Joi = require('joi');
+
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      User:
+ *        type: object
+ *        required:
+ *          - name
+ *          - email
+ *          - password
+ *        properties:
+ *          name:
+ *            type: string
+ *            minlength: 5
+ *            maxlength: 50
+ *            description: Name of user.
+ *          email:
+ *            type: string
+ *            format: email
+ *            minlength: 5
+ *            maxlength: 255
+ *            description: User's email.
+ *          password:
+ *            type: string
+ *            minlength: 5
+ *            maxlength: 255
+ *          isAdmin:
+ *            type: boolean
+ *            default: false
+ *            description: Admin status of registered user.
+ *        example:
+ *          name: Johnny
+ *          email: johndoe@gmail.com
+ *          password: JD1234
+ */
 const userSchema = new mongoose.Schema({
     name: {
         type: String,

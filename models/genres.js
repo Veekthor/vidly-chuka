@@ -1,6 +1,22 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
-
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      Genre:
+ *        type: object
+ *        required:
+ *          - name
+ *        properties:
+ *          name:
+ *            type: string
+ *            minlength: 5
+ *            maxlength: 50
+ *            description: Name of genre.
+ *        example:
+ *          name: Thriller
+ */
 const genreSchema = new mongoose.Schema({
     name: {
         type: String,
