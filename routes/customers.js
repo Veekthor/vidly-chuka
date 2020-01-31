@@ -40,17 +40,17 @@ router.get('/', async (req, res)=>{
 /**
  * @swagger
  * path:
- *  /api/customers/{id}:
+ *  /api/customers/{customerId}:
  *    get:
- *      summary: Get all customers
+ *      summary: Get customer
  *      tags: [Customers]
  *      parameters:
  *        - in: path
- *          name: id
+ *          name: customerId
  *          schema:
  *              type: string
  *          required: true
- *          description: Id of customer
+ *          description: Customer ID
  *      responses:
  *        "200":
  *          description: An array of customers

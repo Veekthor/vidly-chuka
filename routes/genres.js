@@ -74,13 +74,13 @@ router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{
 /**
  * @swagger
  * path:
- *  /api/genres/{id}:
+ *  /api/genres/{genreId}:
  *    get:
- *      summary: Get all genres
+ *      summary: Get genre
  *      tags: [Genres]
  *      parameters:
  *        - in: path
- *          name: id
+ *          name: genreId
  *          schema:
  *              type: string
  *          required: true

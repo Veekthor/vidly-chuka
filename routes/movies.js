@@ -41,13 +41,13 @@ router.get('/', async (req, res) =>{
 /**
  * @swagger
  * path:
- *  /api/movies/{id}:
+ *  /api/movies/{movieId}:
  *    get:
- *      summary: Get all movies
+ *      summary: Get movie
  *      tags: [Movies]
  *      parameters:
  *        - in: path
- *          name: id
+ *          name: movieId
  *          schema:
  *              type: string
  *          required: true
