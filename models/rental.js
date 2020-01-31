@@ -59,8 +59,8 @@ const mongoose = require('mongoose');
  *                  _id: 2345654cdhhw345dnchd4583c,
  *                  title: Avengers,
  *                  dailyRentalRate: 2}
- *          dateOut: Wed Jan 15 2020 22:40:19 GMT+0100 (West Africa Standard Time)
- *          dateReturned: Wed Jan 15 2020 22:40:19 GMT+0100 (West Africa Standard Time)
+ *          dateOut: 2020-01-11T22:14:13.724Z
+ *          dateReturned: 2020-01-11T22:14:13.724Z
  *          rentalFee: 200
  */
 
