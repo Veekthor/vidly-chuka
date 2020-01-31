@@ -9,12 +9,16 @@ const Joi = require('joi');
  *        required:
  *          - name
  *        properties:
+ *          _id:
+ *            type: string
+ *            description: object ID in DB(set by mongoose).
  *          name:
  *            type: string
  *            minlength: 5
  *            maxlength: 50
  *            description: Name of genre.
  *        example:
+ *          _id: 2345654cdhhw345dnchd4583c
  *          name: Thriller
  */
 const genreSchema = new mongoose.Schema({

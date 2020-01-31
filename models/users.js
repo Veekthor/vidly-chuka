@@ -14,6 +14,9 @@ const Joi = require('joi');
  *          - email
  *          - password
  *        properties:
+ *          _id:
+ *            type: string
+ *            description: object ID in DB(set by mongoose).
  *          name:
  *            type: string
  *            minlength: 5
@@ -35,6 +38,7 @@ const Joi = require('joi');
  *            default: false
  *            description: Admin status of registered user.
  *        example:
+ *          _id: 2345654cdhhw345dnchd4583c
  *          name: Johnny
  *          email: johndoe@gmail.com
  *          password: JD1234

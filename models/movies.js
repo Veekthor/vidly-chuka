@@ -14,13 +14,16 @@ const genreSchema = require('./genres');
  *          - numberInStock
  *          - dailyRentalRate
  *        properties:
+ *          _id:
+ *            type: string
+ *            description: object ID in DB(set by mongoose).
  *          title:
  *            type: string
  *            minlength: 3
  *            maxlength: 255
  *            description: Movie title.
  *          genre:
- *            $ref: '#components/schemas/Genres'
+ *            $ref: '#components/schemas/Genre'
  *          numberInStock:
  *            type: number
  *            min: 0
@@ -32,8 +35,10 @@ const genreSchema = require('./genres');
  *            maxlength: 255
  *            description: Rental rate of movie in Naira.
  *        example:
+ *          _id: 2345654cdhhw345dnchd4583c
  *          title: Avenger
  *          genre: {
+ *                    _id: 2345654cdhhw345dnchd4583c,
  *                    name: Thriller
  *                  }
  *          numberInStock: 20

@@ -11,6 +11,9 @@ const mongoose = require('mongoose');
  *          - name
  *          - phone
  *        properties:
+ *          _id:
+ *            type: string
+ *            description: object ID in DB(set by mongoose).
  *          name:
  *            type: string
  *            minlength: 5
@@ -26,6 +29,7 @@ const mongoose = require('mongoose');
  *            maxlength: 50
  *            description: Phone number of customer.
  *        example:
+ *          _id: 2345654cdhhw345dnchd4583c
  *          name: John Doe
  *          isGold: true
  *          phone: +12345678

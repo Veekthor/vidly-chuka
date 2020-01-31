@@ -12,6 +12,9 @@ const mongoose = require('mongoose');
  *          - customer
  *          - movie
  *        properties:
+ *          _id:
+ *            type: string
+ *            description: object ID in DB(set by mongoose).
  *          customer:
  *            $ref: '#components/schemas/Customer'
  *          movie:
@@ -46,10 +49,15 @@ const mongoose = require('mongoose');
  *            min: 0
  *            description: Rental fee(In Naira), set by server.
  *        example:
- *          customer: {name: John Doe,
+ *          _id: 2345654cdhhw345dnchd4583c
+ *          customer: {
+ *                      _id: 2345654cdhhw345dnchd4583c,
+ *                      name: John Doe,
  *                      isGold: true,
  *                      phone: +12345678}
- *          movie: {title: Avengers,
+ *          movie: {
+ *                  _id: 2345654cdhhw345dnchd4583c,
+ *                  title: Avengers,
  *                  dailyRentalRate: 2}
  *          dateOut: Wed Jan 15 2020 22:40:19 GMT+0100 (West Africa Standard Time)
  *          dateReturned: Wed Jan 15 2020 22:40:19 GMT+0100 (West Africa Standard Time)
