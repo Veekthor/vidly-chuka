@@ -35,6 +35,29 @@ router.get('/', async (req, res, next) => {
     res.send(genres);
 });
 
+/**
+ * @swagger
+ * path:
+ *  /api/genres:
+ *    post:
+ *      summary: Create new genre
+ *      tags: [Genres]
+ *      security: 
+ *        - JWTAuth: []
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Genre'
+ *      responses:
+ *        "200":
+ *          description: Created genre details
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Genre'
+ */
 router.post('/', [auth, validate(validateGenre)], async (req, res) =>{
     const genre =  new Genre({
         name: req.body.name

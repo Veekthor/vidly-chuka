@@ -73,6 +73,31 @@ router.get('/:id', validateobjectId, async (req, res) =>{
     res.send(movie);
 });
 
+
+
+/**
+ * @swagger
+ * path:
+ *  /api/movies:
+ *    post:
+ *      summary: Create new movie
+ *      tags: [Movies]
+ *      security: 
+ *        - JWTAuth: []
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movie'
+ *      responses:
+ *        "200":
+ *          description: Created movie details
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Movie'
+ */
 //POST
 router.post('/', [auth, validate(validateMovie)], async (req, res) =>{
     const genre = await Genre.findById(req.body.genreId);
