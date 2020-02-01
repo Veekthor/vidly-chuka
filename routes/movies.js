@@ -164,6 +164,30 @@ router.put('/:id', [auth, validateobjectId, validate(validateMovie)], async (req
 });
 
 
+/**
+ * @swagger
+ * path:
+ *  /api/movies/{movieId}:
+ *    delete:
+ *      summary: Update movie
+ *      tags: [Movies]
+ *      parameters:
+ *        - in: path
+ *          name: movieId
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Movie ID
+ *      security: 
+ *        - JWTAuth: []
+ *      responses:
+ *        "200":
+ *          description: Created movie details
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Movie'
+ */
 
 //Delete
 router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{ 

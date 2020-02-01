@@ -144,6 +144,31 @@ router.put('/:id', [auth, validateobjectId, validate(validateCustomer)], async (
     }
 });
 
+/**
+ * @swagger
+ * path:
+ *  /api/customers/{customerId}:
+ *    delete:
+ *      summary: Update customer
+ *      tags: [Customers]
+ *      parameters:
+ *        - in: path
+ *          name: customerId
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Customer ID
+ *      security: 
+ *        - JWTAuth: []
+ *      responses:
+ *        "200":
+ *          description: Created customer details
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Customer'
+ */
+
 router.delete('/:id', [auth, admin, validateobjectId], async (req, res) => {
         const customer = await Customer.findByIdAndRemove(req.params.id);
         if (!customer) return res.status(400).send('Customer with given ID not found');

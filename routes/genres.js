@@ -103,6 +103,30 @@ router.put('/:id', [auth, validateobjectId, validate(validateGenre)], async (req
     res.send(genre);
 });
 
+/**
+ * @swagger
+ * path:
+ *  /api/genres/{genreId}:
+ *    delete:
+ *      summary: Update genre
+ *      tags: [Genres]
+ *      parameters:
+ *        - in: path
+ *          name: genreId
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Genre ID
+ *      security: 
+ *        - JWTAuth: []
+ *      responses:
+ *        "200":
+ *          description: Created genre details
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Genre'
+ */
 //delete operation
 router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{
 
