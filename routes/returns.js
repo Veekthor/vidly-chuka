@@ -7,6 +7,25 @@ const express = require('express');
 const router = express.Router();
 
 
+/**
+ * @swagger
+ * path:
+ *  /api/returns:
+ *    post:
+ *      summary: Create Return entry for rental
+ *      tags: [Rentals]
+ *      security: 
+ *        - JWTAuth: []
+ *      requestBody:
+ *        $ref: '#/components/requestBodies/RentalInput'
+ *      responses:
+ *        "200":
+ *          description: Return entry details
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Rental'
+ */
 
 router.post('/', [auth, validate(validateReturn)], async (req, res, next) => {
     const rental = await Rental.lookup(req.body.customerId, req.body.movieId);

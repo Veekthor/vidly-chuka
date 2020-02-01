@@ -42,6 +42,25 @@ router.get('/', async (req, res) =>{
     res.send(rentals);
 });
 
+/**
+ * @swagger
+ * path:
+ *  /api/rentals:
+ *    post:
+ *      summary: Create Rental entry
+ *      tags: [Rentals]
+ *      security: 
+ *        - JWTAuth: []
+ *      requestBody:
+ *        $ref: '#/components/requestBodies/RentalInput'
+ *      responses:
+ *        "200":
+ *          description: returns created rental entry
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Rental'
+ */
 router.post('/', [auth, validate(validateRentalOrder)], async (req, res) =>{
     //Check for customer in DB using customerId and send error 
     const customer = await Customer.findById(req.body.customerId);
