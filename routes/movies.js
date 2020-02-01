@@ -168,11 +168,7 @@ router.put('/:id', [auth, validateobjectId, validate(validateMovie)], async (req
 //Delete
 router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{ 
     const movie = await Movie.findByIdAndRemove(req.params.id);
-    if (!movie){
-        res.status(400)
-            .send('Course with given ID not found');
-        return;
-    }
+    if (!movie) return res.status(400).send('Course with given ID not found');
     res.send(movie); 
 });
 

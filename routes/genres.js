@@ -108,11 +108,7 @@ router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{
 
    const genre = await Genre.findByIdAndRemove(req.params.id);
 
-    if (!genre){
-        res.status(404)
-            .send('Genre does not exist');
-        return;
-    }
+    if (!genre) return res.status(404).send('Genre does not exist');
     res.send(genre);
 });
 
