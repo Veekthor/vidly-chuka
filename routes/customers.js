@@ -145,14 +145,10 @@ router.put('/:id', [auth, validateobjectId, validate(validateCustomer)], async (
 });
 
 router.delete('/:id', [auth, admin, validateobjectId], async (req, res) => {
-    try{
         const customer = await Customer.findByIdAndRemove(req.params.id);
-        res.send(customer)
-    } catch(error){
-        res.status(400)
-            .send('Customer with given ID not found');
-        console.error('Error: ', error.message);
-    }
+        if (!customer) return res.status(400).send('Customer with given ID not found');
+        res.send(customer);
+       
 });
 
 module.exports = router;
