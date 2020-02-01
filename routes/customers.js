@@ -57,9 +57,7 @@ router.get('/', async (req, res)=>{
  *          content:
  *            application/json:
  *              schema:
- *                type: array
- *                items:
- *                  $ref: '#/components/schemas/Customer'
+ *                $ref: '#/components/schemas/Customer'
  */
 router.get('/:id', validateobjectId, async (req, res) =>{
     const customer = await Customer.findById(req.params.id);
@@ -82,20 +80,14 @@ router.get('/:id', validateobjectId, async (req, res) =>{
  *      security: 
  *        - JWTAuth: []
  *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Customer'
+ *        $ref: '#/components/requestBodies/CustomerInput'
  *      responses:
  *        "200":
  *          description: Created customer details
  *          content:
  *            application/json:
  *              schema:
- *                type: array
- *                items:
- *                  $ref: '#/components/schemas/Customer'
+ *                $ref: '#/components/schemas/Customer'
  */
 router.post('/', [auth, validate(validateCustomer)], async (req, res) =>{
         const customer = new Customer({
@@ -107,6 +99,34 @@ router.post('/', [auth, validate(validateCustomer)], async (req, res) =>{
 
     res.send(customer);
 });
+
+/**
+ * @swagger
+ * path:
+ *  /api/customers/{customerId}:
+ *    put:
+ *      summary: Update customer
+ *      tags: [Customers]
+ *      parameters:
+ *        - in: path
+ *          name: customerId
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Customer ID
+ *      security: 
+ *        - JWTAuth: []
+ *      requestBody:
+ *        $ref: '#/components/requestBodies/CustomerInput'
+ *      responses:
+ *        "200":
+ *          description: Created customer details
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Customer'
+ */
+
 
 router.put('/:id', [auth, validateobjectId, validate(validateCustomer)], async (req, res) =>{   
     try {

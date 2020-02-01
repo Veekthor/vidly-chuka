@@ -45,11 +45,7 @@ router.get('/', async (req, res, next) => {
  *      security: 
  *        - JWTAuth: []
  *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Genre'
+ *        $ref: '#/components/requestBodies/GenreInput'
  *      responses:
  *        "200":
  *          description: Created genre details
@@ -68,6 +64,32 @@ router.post('/', [auth, validate(validateGenre)], async (req, res) =>{
     res.send(genre);
 });
 
+/**
+ * @swagger
+ * path:
+ *  /api/genres/{genreId}:
+ *    put:
+ *      summary: Update genre
+ *      tags: [Genres]
+ *      parameters:
+ *        - in: path
+ *          name: genreId
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Genre ID
+ *      security: 
+ *        - JWTAuth: []
+ *      requestBody:
+ *        $ref: '#/components/requestBodies/GenreInput'
+ *      responses:
+ *        "200":
+ *          description: Created genre details
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Genre'
+ */
 //put operation
 router.put('/:id', [auth, validateobjectId, validate(validateGenre)], async (req, res) =>{
     const genre = await Genre.findByIdAndUpdate(req.params.id,{
@@ -114,9 +136,7 @@ router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{
  *          content:
  *            application/json:
  *              schema:
- *                type: array
- *                items:
- *                  $ref: '#/components/schemas/Genre'
+ *                $ref: '#/components/schemas/Genre'
  */
 router.get('/:id', validateobjectId, async (req, res) =>{
     const genre = await Genre.findById(req.params.id);

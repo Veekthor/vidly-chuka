@@ -58,9 +58,7 @@ router.get('/', async (req, res) =>{
  *          content:
  *            application/json:
  *              schema:
- *                type: array
- *                items:
- *                  $ref: '#/components/schemas/Movie'
+ *                $ref: '#/components/schemas/Movie'
  */
 //Get ID
 router.get('/:id', validateobjectId, async (req, res) =>{        
@@ -85,11 +83,7 @@ router.get('/:id', validateobjectId, async (req, res) =>{
  *      security: 
  *        - JWTAuth: []
  *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Movie'
+ *        $ref: '#/components/requestBodies/MovieInput'
  *      responses:
  *        "200":
  *          description: Created movie details
@@ -119,6 +113,32 @@ router.post('/', [auth, validate(validateMovie)], async (req, res) =>{
 });
 
 
+/**
+ * @swagger
+ * path:
+ *  /api/movies/{movieId}:
+ *    put:
+ *      summary: Update movie
+ *      tags: [Movies]
+ *      parameters:
+ *        - in: path
+ *          name: movieId
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Movie ID
+ *      security: 
+ *        - JWTAuth: []
+ *      requestBody:
+ *        $ref: '#/components/requestBodies/MovieInput'
+ *      responses:
+ *        "200":
+ *          description: Created movie details
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Movie'
+ */
 
 //PUT
 router.put('/:id', [auth, validateobjectId, validate(validateMovie)], async (req, res) =>{
