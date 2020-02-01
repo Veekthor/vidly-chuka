@@ -32,7 +32,42 @@ const mongoose = require('mongoose');
  *          _id: 2345654cdhhw345dnchd4583c
  *          name: John Doe
  *          isGold: true
- *          phone: +12345678
+ *          phone: 12345678
+ */
+
+
+ /**
+ * @swagger
+ *  components:
+ *    requestBodies:
+ *      CustomerInput:
+ *        required: true
+ *        content:
+ *          application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - phone
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 minlength: 5
+ *                 maxlength: 50
+ *                 description: Customer Name.
+ *               isGold:
+ *                 type: boolean
+ *                 default: false
+ *                 description: Gold membership status of customer.
+ *               phone:
+ *                 type: string
+ *                 minlength: 5
+ *                 maxlength: 50
+ *                 description: Phone number of customer.
+ *             example:
+ *               name: John Doe
+ *               isGold: true
+ *               phone: "12345678"
  */
 
 const Customer = mongoose.model('Customer', new mongoose.Schema({

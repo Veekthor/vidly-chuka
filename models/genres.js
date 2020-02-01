@@ -21,6 +21,28 @@ const Joi = require('joi');
  *          _id: 2345654cdhhw345dnchd4583c
  *          name: Thriller
  */
+
+ /**
+ * @swagger
+ *  components:
+ *    requestBodies:
+ *      GenreInput:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - name
+ *              properties:
+ *                name:
+ *                  type: string
+ *                  minlength: 5
+ *                  maxlength: 50
+ *                  description: Name of genre.
+ *              example:
+ *                name: Thriller
+ */
 const genreSchema = new mongoose.Schema({
     name: {
         type: String,

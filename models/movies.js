@@ -44,6 +44,49 @@ const genreSchema = require('./genres');
  *          numberInStock: 20
  *          dailyRentalRate: 2
  */
+
+ /**
+ * @swagger
+ *  components:
+ *    requestBodies:
+ *      MovieInput:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - title
+ *                - genre
+ *                - numberInStock
+ *                - dailyRentalRate
+ *              properties:
+ *                title:
+ *                  type: string
+ *                  minlength: 3
+ *                  maxlength: 255
+ *                  description: Movie title.
+ *                genreId:
+ *                  type: string
+ *                  minlength: 3
+ *                  maxlength: 255
+ *                  description: Genre ID.
+ *                numberInStock:
+ *                  type: number
+ *                  min: 0
+ *                  maxlength: 255
+ *                  description: Number of movies in stock.
+ *                dailyRentalRate:
+ *                  type: number
+ *                  min: 0
+ *                  maxlength: 255
+ *                  description: Rental rate of movie in Naira.
+ *              example:
+ *                title: Avenger
+ *                genreId: 5e14df28f4d7b210dee56b2a
+ *                numberInStock: 20
+ *                dailyRentalRate: 2
+ */
 const Movie = mongoose.model('Movie', new mongoose.Schema({
     title: {
         type: String,

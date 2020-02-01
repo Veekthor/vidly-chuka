@@ -64,6 +64,31 @@ const mongoose = require('mongoose');
  *          rentalFee: 200
  */
 
+
+ /**
+  * @swagger
+  *   components:
+  *     requestBodies:
+  *       RentalInput:
+  *         required: true
+  *         content:
+  *           application/json:
+  *             schema:
+  *                type: object
+  *                required:
+  *                 - customerId
+  *                 - movieId
+  *                properties:
+  *                 customerId:
+  *                   type: string
+  *                   description: valid customer ID.
+  *                 movieId:
+  *                   type: string
+  *                   description: valid movie ID.
+  *                example:
+  *                 customerId: 5e1a345acdfc4678fe306993
+  *                 movieId: 5e19ef819d9c363d7714e7c4
+  */
 const rentalSchema = new mongoose.Schema({
     customer: {
         type: new mongoose.Schema({
