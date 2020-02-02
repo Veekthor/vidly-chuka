@@ -21,9 +21,10 @@ $ mongod
 ```
 
 
-### Usage / Demo
-Visit vidly-chuka.herokuapp.com
+### Usage & Demo
+
+Visit http://vidly-chuka.herokuapp.com
 
 OR
 
-vidly-chuka.herokuapp.com/docs
+http://vidly-chuka.herokuapp.com/docs
