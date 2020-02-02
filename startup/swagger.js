@@ -14,7 +14,7 @@ const router = express.Router();
  *          description: json web token given when logged in
  */
 
-const spec = swaggerJsDoc({
+const spec = swaggerJsDoc({ // defining swagger spec
     swaggerDefinition: {
         openapi: '3.0.0',
         info: {
@@ -34,6 +34,6 @@ const spec = swaggerJsDoc({
 router.get('/json', (req, res) => {
     res.header('Content-Type', 'application/json').send(spec);
   })
-router.use('/', swaggerUi.serve, swaggerUi.setup(spec));
+router.use('/', swaggerUi.serve, swaggerUi.setup(spec)); //implementing swagger UI
 
 module.exports = router;

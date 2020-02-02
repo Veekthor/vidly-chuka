@@ -47,10 +47,10 @@ const router = express.Router();
  *                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
  */
 router.post('/', validate(validateInput), async (req, res) =>{
-    let user = await User.findOne({ email: req.body.email }); // Check if user exists
+    const user = await User.findOne({ email: req.body.email }); // Check if user exists
     if (!user) return res.status(400).send('Invalid email or password.');
 
-    const validPassword =  await bcrypt.compare(req.body.password, user.password);
+    const validPassword =  await bcrypt.compare(req.body.password, user.password); // validate password
     if (!validPassword) return res.status(400).send('Invalid email or password.');
 
     const token = user.generateAuthToken();

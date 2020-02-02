@@ -43,7 +43,7 @@ const Joi = require('joi');
  *              example:
  *                name: Thriller
  */
-const genreSchema = new mongoose.Schema({
+const genreSchema = new mongoose.Schema({ //create schema
     name: {
         type: String,
         required: true,
@@ -52,7 +52,7 @@ const genreSchema = new mongoose.Schema({
     }
 });
 
-const Genre = mongoose.model('Genre', genreSchema);
+const Genre = mongoose.model('Genre', genreSchema); // create collection model
 
 //Validate input
 function validateGenre (genre){

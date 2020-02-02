@@ -89,9 +89,9 @@ const mongoose = require('mongoose');
   *                 customerId: 5e1a345acdfc4678fe306993
   *                 movieId: 5e19ef819d9c363d7714e7c4
   */
-const rentalSchema = new mongoose.Schema({
+const rentalSchema = new mongoose.Schema({//create model directly from schema 
     customer: {
-        type: new mongoose.Schema({
+        type: new mongoose.Schema({     // Input type can be set to schema
             name: {
                 type: String,
                 required: true,
@@ -147,13 +147,16 @@ rentalSchema.statics.lookup = function(customerId, movieId){
     });
 };
 
+//Instance method to set return date and calculate rental Fee
 rentalSchema.methods.return = function(){
     this.dateReturned = new Date(); //set return date
 
     const diffDays = moment().diff(this.dateOut, 'days'); //calculate the days difference
     this.rentalFee = diffDays * this.movie.dailyRentalRate;
 };
-const Rental = mongoose.model('Rental', rentalSchema);
+
+
+const Rental = mongoose.model('Rental', rentalSchema); // create collection model
 
 function validateRental(rental){
     const schema = {

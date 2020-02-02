@@ -87,7 +87,7 @@ const genreSchema = require('./genres');
  *                numberInStock: 20
  *                dailyRentalRate: 2
  */
-const Movie = mongoose.model('Movie', new mongoose.Schema({
+const Movie = mongoose.model('Movie', new mongoose.Schema({ //create model directly from schema (using genre sub document)
     title: {
         type: String,
         required: true,

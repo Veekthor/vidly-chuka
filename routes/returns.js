@@ -34,7 +34,7 @@ router.post('/', [auth, validate(validateReturn)], async (req, res, next) => {
     
     if(rental.dateReturned) return res.status(400).send('rental already processed');
 
-    rental.return();
+    rental.return(); //to set return date and calculate rental fee
     try{
         new Fawn.Task()
                 .update('rentals',{_id: rental._id}, {

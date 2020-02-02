@@ -43,7 +43,7 @@ const Joi = require('joi');
  *          email: johndoe@gmail.com
  *          password: JD1234
  */
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({ //Create user schema
     name: {
         type: String,
         required: true,
@@ -72,14 +72,14 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-//Add (instance) method to user schema
+//Instance method to generate and return jwt
 userSchema.methods.generateAuthToken = function(){
                                 //Payload          //PrivateKey
     const token = jwt.sign({_id: this._id, isAdmin: this.isAdmin}, config.get('jwtPrivateKey')); //to create JSON webtoken 
 
     return token;
 };
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema); //create user model
 
 function validateUser(user){
     const schema ={
