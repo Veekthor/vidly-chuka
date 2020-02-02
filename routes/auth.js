@@ -5,7 +5,6 @@ const { User } = require('../models/users');
 const validate = require('../middleware/validateInput');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 
 /**
  * @swagger

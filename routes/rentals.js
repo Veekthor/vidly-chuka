@@ -3,7 +3,6 @@ const { Rental, validate: validateRentalOrder } = require('../models/rental');
 const { Customer } = require('../models/customer');
 const { Movie } = require('../models/movies');
 const validate = require ('../middleware/validateInput');
-const mongoose = require('mongoose');
 const Fawn = require('fawn');
 const express = require('express');
 const router = express.Router();
@@ -32,8 +31,6 @@ const router = express.Router();
  *                items:
  *                  $ref: '#/components/schemas/Rental'
  */
-
-Fawn.init(mongoose)
 
 
 router.get('/', async (req, res) =>{
@@ -94,10 +91,11 @@ router.post('/', [auth, validate(validateRentalOrder)], async (req, res) =>{
                 $inc: {numberInStock: -1}
             }).run();
 
-    res.send(rental);
+        res.send(rental);
     }
     catch(ex){
         res.status(500).send('Something failed');
+        throw ex;
     }
     
 });

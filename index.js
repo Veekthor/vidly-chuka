@@ -2,6 +2,7 @@ const winston = require('winston');
 const express = require('express');
 const app = express();
 
+require('./startup/fawn')(); // fawn initialization
 require('./startup/logging')();// dealing with error handling & winston
 require('./startup/routes')(app); // handles routes (and) middleware
 require('./startup/db')(); // connects to mongoDB
@@ -10,7 +11,7 @@ require('./startup/validation')();
 require('./startup/prod')(app);
 
 app.get('/', (req, res) => {
-    res.send("Hello world");
+    res.redirect('/docs');
 });
 
 const port = process.env.PORT || 3000;
