@@ -33,8 +33,7 @@ const router = express.Router();
  */
 //Get
 router.get('/', async (req, res) =>{
-    const movies = await Movie.find()
-                        .sort('title');
+    const movies = await Movie.find().sort('title');
     res.send(movies);
 });
 

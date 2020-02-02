@@ -38,6 +38,35 @@ router.get('/', async (req, res, next) => {
 /**
  * @swagger
  * path:
+ *  /api/genres/{genreId}:
+ *    get:
+ *      summary: Get genre
+ *      tags: [Genres]
+ *      parameters:
+ *        - in: path
+ *          name: genreId
+ *          schema:
+ *              type: string
+ *          required: true
+ *          description: Genre ID
+ *      responses:
+ *        "200":
+ *          description: An array of genres
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Genre'
+ */
+router.get('/:id', validateobjectId, async (req, res) =>{
+    const genre = await Genre.findById(req.params.id);
+    if (!genre) return res.status(404).send('Genre does not exist');
+    
+    res.send(genre)
+});
+
+/**
+ * @swagger
+ * path:
  *  /api/genres:
  *    post:
  *      summary: Create new genre
@@ -134,35 +163,6 @@ router.delete('/:id', [auth, admin, validateobjectId], async (req, res) =>{
 
     if (!genre) return res.status(404).send('Genre does not exist');
     res.send(genre);
-});
-
-/**
- * @swagger
- * path:
- *  /api/genres/{genreId}:
- *    get:
- *      summary: Get genre
- *      tags: [Genres]
- *      parameters:
- *        - in: path
- *          name: genreId
- *          schema:
- *              type: string
- *          required: true
- *          description: Genre ID
- *      responses:
- *        "200":
- *          description: An array of genres
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Genre'
- */
-router.get('/:id', validateobjectId, async (req, res) =>{
-    const genre = await Genre.findById(req.params.id);
-    if (!genre) return res.status(404).send('Genre does not exist');
-    
-    res.send(genre)
 });
 
 module.exports = router;
