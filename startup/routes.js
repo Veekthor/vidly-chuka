@@ -11,7 +11,8 @@ const express = require('express');
 
 module.exports = function(app){
     //middle ware
-    app.use(express.json());
+    app.use(express.json()); // allows json inputs
+    app.use(express.urlencoded({ extended: true })); // allows url-encoded inputs
     app.use('/api/genres', genres);
     app.use('/api/customers', customers);
     app.use('/api/movies', movies);
