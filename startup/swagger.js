@@ -20,13 +20,12 @@ const spec = swaggerJsDoc({ // defining swagger spec
         info: {
             title: 'Vidly',
             version: '1.0.0',
-            description: 'A  movie rentals service developed during Mosh\'s NodeJS tutorial'
-        },
-          servers:[
-              {
-                  url: 'http://localhost:3000'
-              }
-          ]
+            description: 'An imaginary  movie rentals service used to learn NodeJS. You need to use the register/logIn to get a valid jwt to use for authorization. Give user admin rights by setting "isAdmin: true" in db.',
+            contact: {
+                name: "Ilozulu Chuka",
+                url: 'https://github.com/Veekthor'
+            }
+        }
     },
     apis:['./routes/*.js', './models/*.js','./startup/*.js']
 })
