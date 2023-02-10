@@ -85,7 +85,7 @@ router.post('/', [auth, validate(validateRentalOrder)], async (req, res) =>{
     })
     // Fawn task for atomicity of transaction
     try{
-        new Fawn.Task()
+        await new Fawn.Task()
             .save('rentals', rental)
             .update('movies', { _id: movie._id }, {
                 $inc: {numberInStock: -1}

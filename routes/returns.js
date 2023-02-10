@@ -36,7 +36,7 @@ router.post('/', [auth, validate(validateReturn)], async (req, res, next) => {
 
     rental.return(); //to set return date and calculate rental fee
     try{
-        new Fawn.Task()
+        await new Fawn.Task()
                 .update('rentals',{_id: rental._id}, {
                     dateReturned: rental.dateReturned,
                     rentalFee: rental.rentalFee
