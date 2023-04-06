@@ -23,8 +23,8 @@ $ mongod
 
 ### Usage & Demo
 
-Visit http://vidly-chuka.herokuapp.com
+Visit https://vidly-app-v3ik.onrender.com
 
 OR
 
-http://vidly-chuka.herokuapp.com/docs
+https://vidly-app-v3ik.onrender.com/docs
