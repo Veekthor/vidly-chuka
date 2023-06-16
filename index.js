@@ -14,6 +14,12 @@ app.get('/', (req, res) => {
     res.redirect('/docs');
 });
 
+app.get("/api/health", (req, res) => {
+    res.json({
+        health: "OK",
+    });
+});
+
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () =>{winston.info(`Listening on port ${port}...`)});
 
