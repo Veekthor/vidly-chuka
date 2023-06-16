@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
-const genreSchema = require('./genres');
+const { genreSchema } = require('./genres');
 
 /**
  * @swagger

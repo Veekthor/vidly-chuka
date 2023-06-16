@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
 const Fawn = require('fawn');
-    
+const config = require('config');
+
 module.exports = () =>{
-    Fawn.init(mongoose);
+    const db = config.get('db');
+    Fawn.init(db);
 }
